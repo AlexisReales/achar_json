@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar Carros</title>
+    <script src="script.js" defer></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            outline: none;
+            border: none;
+            background-color: aliceblue;
+        }
+        .corpo{
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: center;
+        }
+        input{
+            text-align: center;
+            padding: 5px;
+            border-bottom: 1px solid #000;
+        }
+        #cod{
+            margin-top: 10px;
+        }
+        button{
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #000;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="corpo">
+        <h1>Verificar Carros</h1>
+        <div class="input-cont">
+            <input type="text" id="cod" placeholder="Digite o CEP"> &nbsp;
+            <button onclick="Buscar()">Buscar</button>
+            <div class="result">
+                <!-- result -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function Buscar(){
+            let cod = document.getElementById('cod').value
+            let result = document.querySelector('.result')
+            let url = "./carro.json"
+            fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                let carros = data.automoveis
+                for(let i = 0; i < carros.length; i++){
+                    if(carros[i].placa == cod){
+                        result.innerHTML = `
+                            <p>Placa: ${carros[i].placa}</p>
+                            <p>Marca: ${carros[i].marca}</p>
+                            <p>Modelo: ${carros[i].modelo}</p>
+                            <p>Ano de Lançamento: ${carros[i].ano}</p>
+                        `
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+</html>
